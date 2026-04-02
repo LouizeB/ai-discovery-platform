@@ -1,5 +1,14 @@
 import { useState } from "react";
-import { Send, Loader2, Brain, ArrowRight, Code2 } from "lucide-react";
+import {
+  Send,
+  Loader2,
+  Brain,
+  ArrowRight,
+  Code2,
+  Users,
+  Package,
+  Shield,
+} from "lucide-react";
 import "./App.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
@@ -17,13 +26,57 @@ interface AnalysisResult {
   score: number;
   flow: string[];
   stage: string;
+  disciplines: string[];
+  outputs: string[];
+  papel_coe: string;
+}
+
+const stageDescriptions: Record<string, string> = {
+  ESTRATEGICO: "Descoberta & Contexto — Alta incerteza, impacto transversal",
+  EXPLORATORIO: "Direcionamento — Decisoes estruturantes de produto",
+  TATICO: "Evolucao de Produto — Execucao recorrente e incremental",
+};
+
+const funnelOrder = ["ESTRATEGICO", "EXPLORATORIO", "TATICO"];
+
+function FunnelIndicator({ stage }: { stage: string }) {
+  const activeIndex = funnelOrder.indexOf(stage);
+
+  const colors = [
+    { active: "bg-purple-500", inactive: "bg-purple-100" },
+    { active: "bg-blue-500", inactive: "bg-blue-100" },
+    { active: "bg-emerald-500", inactive: "bg-emerald-100" },
+  ];
+
+  const labels = ["Estrategico", "Exploratorio", "Tatico"];
+
+  return (
+    <div className="flex items-center gap-1 w-full">
+      {funnelOrder.map((s, i) => (
+        <div key={s} className="flex-1 flex flex-col items-center gap-1">
+          <div
+            className={`h-2 w-full rounded-full transition-all ${
+              i === activeIndex ? colors[i].active : colors[i].inactive
+            }`}
+          />
+          <span
+            className={`text-xs ${
+              i === activeIndex ? "font-semibold text-gray-700" : "text-gray-400"
+            }`}
+          >
+            {labels[i]}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 function StageBadge({ stage }: { stage: string }) {
   const colors: Record<string, string> = {
-    DISCOVERY: "bg-purple-100 text-purple-800 border-purple-300",
-    DESIGN: "bg-blue-100 text-blue-800 border-blue-300",
-    BACKLOG: "bg-gray-100 text-gray-800 border-gray-300",
+    ESTRATEGICO: "bg-purple-100 text-purple-800 border-purple-300",
+    EXPLORATORIO: "bg-blue-100 text-blue-800 border-blue-300",
+    TATICO: "bg-emerald-100 text-emerald-800 border-emerald-300",
   };
 
   return (
@@ -175,7 +228,7 @@ function App() {
               AI Discovery Platform
             </h1>
             <p className="text-xs text-gray-500">
-              Classificacao inteligente de projetos
+              Funil de Projetos do Design CoE
             </p>
           </div>
         </div>
@@ -254,17 +307,13 @@ function App() {
 
               {/* Stage */}
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center gap-3">
-                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
-                  Stage
-                </h3>
-                <StageBadge stage={result.stage} />
-                <p className="text-xs text-gray-400 text-center mt-1">
-                  {result.stage === "DISCOVERY" &&
-                    "Fase de exploracao e pesquisa"}
-                  {result.stage === "DESIGN" &&
-                    "Fase de design e prototipacao"}
-                  {result.stage === "BACKLOG" && "Aguardando priorizacao"}
-                </p>
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                    Nivel do Funil
+                  </h3>
+                  <StageBadge stage={result.stage} />
+                  <p className="text-xs text-gray-400 text-center mt-1">
+                    {stageDescriptions[result.stage] || result.stage}
+                  </p>
               </div>
 
               {/* Flow */}
@@ -293,7 +342,74 @@ function App() {
               </div>
             </div>
 
-            {/* Criteria Breakdown */}
+            {/* Funnel Position */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
+                Posicao no Funil do Design CoE
+              </h3>
+              <FunnelIndicator stage={result.stage} />
+              <p className="text-xs text-gray-500 mt-3 text-center">
+                Quanto mais alto no funil: maior impacto, maior incerteza, maior envolvimento estrategico
+              </p>
+            </div>
+
+            {/* Disciplines + Outputs + CoE Role */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Disciplines */}
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Users className="w-4 h-4 text-indigo-500" />
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                    Disciplinas Envolvidas
+                  </h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {result.disciplines.map((d, i) => (
+                    <span
+                      key={i}
+                      className="inline-flex items-center px-2.5 py-1 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-medium"
+                    >
+                      {d}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Outputs */}
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Package className="w-4 h-4 text-emerald-500" />
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                    Outputs Esperados
+                  </h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {result.outputs.map((o, i) => (
+                    <span
+                      key={i}
+                      className="inline-flex items-center px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-medium"
+                    >
+                      {o}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* CoE Role */}
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Shield className="w-4 h-4 text-purple-500" />
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                    Papel do Design CoE
+                  </h3>
+                </div>
+                <p className="text-sm font-medium text-gray-700">
+                  {result.papel_coe}
+                </p>
+              </div>
+            </div>
+
+            {/* Criteria Breakdown */
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
               <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
                 Criterios de Avaliacao
@@ -365,7 +481,7 @@ function App() {
       {/* Footer */}
       <footer className="border-t border-gray-200 mt-16">
         <div className="max-w-5xl mx-auto px-6 py-6 text-center text-xs text-gray-400">
-          AI Discovery Platform &middot; Decision Engine v1
+          AI Discovery Platform &middot; Funil de Design CoE v2
         </div>
       </footer>
     </div>

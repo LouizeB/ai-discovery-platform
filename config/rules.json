@@ -1,22 +1,50 @@
 [
   {
-    "condition": "tipo === 'novo_produto' && impacto_usuario >= 4",
-    "flow": ["Research", "Product Design", "Analytics"],
-    "stage": "DISCOVERY"
+    "condition": "tipo === 'estrategico'",
+    "flow": ["Research", "Service Design", "UX Strategy", "Facilitacao"],
+    "stage": "ESTRATEGICO",
+    "disciplines": ["Research", "Service Design", "UX Strategy", "Facilitacao"],
+    "outputs": ["Problem Framing", "Mapas de Oportunidades", "Direcionamento Estrategico"],
+    "papel_coe": "Lideranca do projeto"
   },
   {
-    "condition": "tipo === 'melhoria' && complexidade <= 2",
-    "flow": ["Product Design"],
-    "stage": "DESIGN"
+    "condition": "tipo === 'exploratorio'",
+    "flow": ["UX Design", "Research", "Content"],
+    "stage": "EXPLORATORIO",
+    "disciplines": ["UX Design", "Research", "Content", "UI"],
+    "outputs": ["Jornadas", "Conceitos", "Principios de Solucao"],
+    "papel_coe": "Parceria com Produto e Negocio"
   },
   {
-    "condition": "tipo === 'design_system'",
-    "flow": ["Design System"],
-    "stage": "DESIGN"
+    "condition": "tipo === 'tatico'",
+    "flow": ["UX Design", "Visual", "Content", "DesignOps"],
+    "stage": "TATICO",
+    "disciplines": ["UX Design", "UI", "Content", "DesignOps", "Research sob demanda"],
+    "outputs": ["Fluxos", "Wireframes", "Prototipos", "Especificacoes", "Componentes"],
+    "papel_coe": "Execucao orientada e suporte"
+  },
+  {
+    "condition": "score >= 3.5 && impacto_negocio >= 4",
+    "flow": ["Research", "Service Design", "UX Strategy"],
+    "stage": "ESTRATEGICO",
+    "disciplines": ["Research", "Service Design", "UX Strategy"],
+    "outputs": ["Problem Framing", "Mapas de Oportunidades", "Direcionamento Estrategico"],
+    "papel_coe": "Lideranca do projeto"
+  },
+  {
+    "condition": "score >= 2.5",
+    "flow": ["UX Design", "Research", "Content"],
+    "stage": "EXPLORATORIO",
+    "disciplines": ["UX Design", "Research", "Content"],
+    "outputs": ["Jornadas", "Conceitos", "Principios de Solucao"],
+    "papel_coe": "Parceria com Produto e Negocio"
   },
   {
     "condition": "score < 2.5",
-    "flow": [],
-    "stage": "BACKLOG"
+    "flow": ["UX Design", "Visual", "Content"],
+    "stage": "TATICO",
+    "disciplines": ["UX Design", "UI", "Content", "DesignOps"],
+    "outputs": ["Fluxos", "Wireframes", "Prototipos"],
+    "papel_coe": "Execucao orientada e suporte"
   }
 ]

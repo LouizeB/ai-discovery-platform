@@ -30,6 +30,9 @@ app.post("/analyze", async (req, res) => {
       score,
       flow: decision.flow,
       stage: decision.stage,
+      disciplines: decision.disciplines,
+      outputs: decision.outputs,
+      papel_coe: decision.papel_coe,
     });
   } catch (error) {
     console.error("Error in /analyze:", error);

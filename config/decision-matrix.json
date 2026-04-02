@@ -1,5 +1,5 @@
 {
-  "version": "v1",
+  "version": "v2",
   "criteria": {
     "impacto_negocio": 0.3,
     "impacto_usuario": 0.25,

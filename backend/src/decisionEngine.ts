@@ -14,6 +14,9 @@ interface ClassificationInput {
 interface DecisionResult {
   flow: string[];
   stage: string;
+  disciplines: string[];
+  outputs: string[];
+  papel_coe: string;
 }
 
 export function calculateScore(input: ClassificationInput): number {
@@ -45,12 +48,18 @@ export function applyRules(
       return {
         flow: rule.flow,
         stage: rule.stage,
+        disciplines: rule.disciplines || [],
+        outputs: rule.outputs || [],
+        papel_coe: rule.papel_coe || "",
       };
     }
   }
 
   return {
-    flow: ["Backlog"],
-    stage: "BACKLOG",
+    flow: ["UX Design", "Visual", "Content"],
+    stage: "TATICO",
+    disciplines: ["UX Design", "UI", "Content", "DesignOps"],
+    outputs: ["Fluxos", "Wireframes", "Prototipos"],
+    papel_coe: "Execucao orientada e suporte",
   };
 }
