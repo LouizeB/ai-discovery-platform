@@ -4,7 +4,6 @@ import {
   Loader2,
   Brain,
   ArrowRight,
-  Code2,
   Users,
   Package,
   Shield,
@@ -183,7 +182,6 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [showJson, setShowJson] = useState(false);
 
   const handleAnalyze = async () => {
     if (!description.trim()) return;
@@ -409,7 +407,7 @@ function App() {
               </div>
             </div>
 
-            {/* Criteria Breakdown */
+            {/* Criteria Breakdown */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
               <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
                 Criterios de Avaliacao
@@ -450,30 +448,6 @@ function App() {
               </div>
             </div>
 
-            {/* JSON Toggle */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-              <button
-                onClick={() => setShowJson(!showJson)}
-                className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
-              >
-                <div className="flex items-center gap-2">
-                  <Code2 className="w-4 h-4 text-gray-500" />
-                  <span className="text-sm font-semibold text-gray-700">
-                    JSON da Decisao
-                  </span>
-                </div>
-                <span className="text-xs text-gray-400">
-                  {showJson ? "Ocultar" : "Mostrar"}
-                </span>
-              </button>
-              {showJson && (
-                <div className="px-6 pb-6">
-                  <pre className="bg-gray-900 text-gray-100 rounded-xl p-4 text-sm overflow-x-auto leading-relaxed">
-                    {JSON.stringify(result, null, 2)}
-                  </pre>
-                </div>
-              )}
-            </div>
           </section>
         )}
       </main>
