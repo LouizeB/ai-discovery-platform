@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "criteria": {
+    "impacto_negocio": 0.3,
+    "impacto_usuario": 0.25,
+    "complexidade": 0.15,
+    "urgencia": 0.15,
+    "alinhamento_estrategico": 0.15
+  }
+}

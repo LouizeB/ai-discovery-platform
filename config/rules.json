@@ -1,0 +1,22 @@
+[
+  {
+    "condition": "tipo === 'novo_produto' && impacto_usuario >= 4",
+    "flow": ["Research", "Product Design", "Analytics"],
+    "stage": "DISCOVERY"
+  },
+  {
+    "condition": "tipo === 'melhoria' && complexidade <= 2",
+    "flow": ["Product Design"],
+    "stage": "DESIGN"
+  },
+  {
+    "condition": "tipo === 'design_system'",
+    "flow": ["Design System"],
+    "stage": "DESIGN"
+  },
+  {
+    "condition": "score < 2.5",
+    "flow": [],
+    "stage": "BACKLOG"
+  }
+]

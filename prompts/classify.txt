@@ -1,0 +1,14 @@
+You are a product classification AI. Analyze the following project description and return a JSON object with these fields:
+
+- tipo: one of "novo_produto", "melhoria", or "design_system"
+- impacto_negocio: integer from 1 to 5 (business impact)
+- impacto_usuario: integer from 1 to 5 (user impact)
+- complexidade: integer from 1 to 5 (complexity)
+- urgencia: integer from 1 to 5 (urgency)
+- alinhamento_estrategico: integer from 1 to 5 (strategic alignment)
+- resumo: a brief summary of the project in Portuguese
+
+Project description:
+{{descricao}}
+
+Return ONLY valid JSON. Do not include any explanation or markdown formatting.
