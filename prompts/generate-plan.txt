@@ -1,0 +1,17 @@
+Based on the following project classification, generate a recommended action plan.
+
+Classification:
+{{classificacao}}
+
+Score: {{score}}
+Flow: {{flow}}
+Stage: {{stage}}
+
+Please provide a structured action plan with:
+1. Key milestones
+2. Recommended team composition
+3. Estimated timeline
+4. Risk factors
+5. Success metrics
+
+Return the plan in Portuguese as a JSON object.
